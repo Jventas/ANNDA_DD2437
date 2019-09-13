@@ -41,7 +41,7 @@ for n = 2:63 % n = number of RBF
 
 
 mean = linspace(0+pi/n,2*pi-pi/n,n); % Equispaced RBF (between 0 and 2pi)
-sigma = (mean(end)-mean(end-1))/2; % std_dev
+sigma = (mean(end)-mean(end-1))/4; % std_dev
 
 %Plot of RBFs
 
@@ -61,7 +61,7 @@ phi = zeros(N,n);
 
 % Populate phi matrix
 for k=1:n
-    phi(:,k) = exp(-(x-mean(k)).^2/sigma.^2);
+    phi(:,k) = exp(-0.5*(x-mean(k)).^2/sigma.^2);
 end
 
 w_sine = inv(phi'*phi)*phi'*f_sin;
@@ -74,7 +74,7 @@ w_sq = inv(phi'*phi)*phi'*f_sq;
 phi_val = zeros(N,n);
 
 for k=1:n
-    phi_val(:,k) = exp(-(x_val-mean(k)).^2/sigma.^2);
+    phi_val(:,k) = exp(-0.5*(x_val-mean(k)).^2/sigma.^2);
 end
 
 abs_err_sin(end+1) = sum(abs(phi*w_sine-f_sin))/length(abs(phi*w_sine-f_sin));
@@ -94,7 +94,7 @@ title('Absolute Residual Error vs number of RBF sin(2x)')
 xlabel('number of RBF')
 ylabel('Absolute Residual Error')
 legend('Training error','Validation Error','Location','NorthEast')
-axis([10 63 0 0.4])
+%axis([10 63 0 0.4])
 hold off
 
 figure(4)
@@ -105,7 +105,7 @@ title('Absolute Residual Error vs number of RBF square(2x)')
 xlabel('number of RBF')
 ylabel('Absolute Residual Error')
 legend('Training error','Validation Error','Location','NorthEast')
-axis([10 63 0 0.4])
+%axis([10 63 0 0.4])
 hold off
 
 
