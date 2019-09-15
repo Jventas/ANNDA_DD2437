@@ -33,9 +33,11 @@ hold off
 
 abs_err_sin = [];
 abs_err_sq = [];
+abs_err_sq_round= [];
 
 abs_err_sin_val = [];
 abs_err_sq_val = [];
+abs_err_sq_round_val = [];
 
 for n = 2:63 % n = number of RBF
 
@@ -79,10 +81,11 @@ end
 
 abs_err_sin(end+1) = sum(abs(phi*w_sine-f_sin))/length(abs(phi*w_sine-f_sin));
 abs_err_sq(end+1) = sum(abs(phi*w_sq-f_sq))/length(abs(phi*w_sq-f_sq));
+abs_err_sq_round(end+1) =sum(abs(sign(phi*w_sq)-f_sq))/length(abs(phi*w_sq-f_sq));
 
 abs_err_sin_val(end+1) = sum(abs(phi_val*w_sine-f_sin_val))/length(abs(phi_val*w_sine-f_sin_val));
 abs_err_sq_val(end+1) = sum(abs(phi_val*w_sq-f_sq_val))/length(abs(phi_val*w_sq-f_sq_val));
-
+abs_err_sq_round_val(end+1) = sum(abs(sign(phi_val*w_sq)-f_sq_val))/length(abs(phi_val*w_sq-f_sq_val));
 end
 
 
@@ -95,6 +98,7 @@ xlabel('number of RBF')
 ylabel('Absolute Residual Error')
 legend('Training error','Validation Error','Location','NorthEast')
 %axis([10 63 0 0.4])
+grid on
 hold off
 
 figure(4)
@@ -105,9 +109,21 @@ title('Absolute Residual Error vs number of RBF square(2x)')
 xlabel('number of RBF')
 ylabel('Absolute Residual Error')
 legend('Training error','Validation Error','Location','NorthEast')
+grid on
 %axis([10 63 0 0.4])
 hold off
 
+figure(5)
+hold on
+plot(2:n,abs_err_sq_round,'r','LineWidth',1.5)
+plot(2:n,abs_err_sq_round_val,'b','LineWidth',1.5)
+title('Absolute Residual Error vs number of RBF square(2x) transform')
+xlabel('number of RBF')
+ylabel('Absolute Residual Error')
+legend('Training error','Validation Error','Location','NorthEast')
+grid on
+%axis([10 63 0 0.4])
+hold off
 
 
 
