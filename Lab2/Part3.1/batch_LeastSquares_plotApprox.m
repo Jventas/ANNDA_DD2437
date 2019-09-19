@@ -43,7 +43,7 @@ abs_err_sq_val = [];
 
 
 mean = linspace(0+pi/n,2*pi-pi/n,n); % Equispaced RBF (between 0 and 2pi)
-sigma = (mean(end)-mean(end-1))/4; % std_dev
+sigma = 1.2; % std_dev
 
 %Plot of RBFs
 

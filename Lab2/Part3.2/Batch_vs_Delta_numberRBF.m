@@ -16,8 +16,8 @@ f_val = sin(2*x_val); % sin(2x) (validation)
 % f = 1*(f>=0) -1 * (f<0);; % square(2x)
 % f_val = 1*(f_val>=0) -1 * (f_val<0); % square(2x) (validation)
 
-x = x + sqrt(0.1)*randn(63,1); % input
-x_val = x_val + sqrt(0.1)*randn(63,1); % validation samples
+% x = x + sqrt(0.1)*randn(63,1); % input
+% x_val = x_val + sqrt(0.1)*randn(63,1); % validation samples
 
 nMax = 16; % max number RBF
 

@@ -43,7 +43,7 @@ for n = 2:63 % n = number of RBF
 
 
 mean = linspace(0+pi/n,2*pi-pi/n,n); % Equispaced RBF (between 0 and 2pi)
-sigma = (mean(end)-mean(end-1))/4; % std_dev
+sigma = 1.2; % std_dev
 
 %Plot of RBFs
 
@@ -105,10 +105,14 @@ figure(4)
 hold on
 plot(2:n,abs_err_sq,'r','LineWidth',1.5)
 plot(2:n,abs_err_sq_val,'b','LineWidth',1.5)
+plot(2:n,abs_err_sq_round,'r--','LineWidth',1.5)
+plot(2:n,abs_err_sq_round_val,'b--','LineWidth',1.5)
 title('Absolute Residual Error vs number of RBF square(2x)')
 xlabel('number of RBF')
 ylabel('Absolute Residual Error')
-legend('Training error','Validation Error','Location','NorthEast')
+legend('Training error','Validation Error', ... 
+    'Training error (with transformation)', 'Validation error (with transformation)', ...
+    'Location','NorthEast')
 grid on
 %axis([10 63 0 0.4])
 hold off
