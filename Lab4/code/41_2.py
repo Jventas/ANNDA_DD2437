@@ -20,7 +20,8 @@ if __name__ == "__main__":
     epochs = 1;
 
     # number of iterations to pass through the whole dataset
-    n_iterations = math.floor(60000/batch_size)
+    n_iterations = 30000
+    n_epochs = np.floor(n_iterations*batch_size/60000)
 
     rbm = RestrictedBoltzmannMachine(ndim_visible=image_size[0]*image_size[1],
                                      ndim_hidden = ndim_hidden,
@@ -33,9 +34,8 @@ if __name__ == "__main__":
 
     reconstr_err_500 = []
 
-    for i in range(0,epochs):
-        rbm.cd1(visible_trainset=train_imgs, n_iterations=n_iterations)
-        reconstr_err_500 += rbm.get_err_rec()
+    rbm.cd1(visible_trainset=train_imgs, n_iterations=n_iterations)
+    reconstr_err_500 += rbm.get_err_rec()
 
     #set minibatch size and dimension of hidden layer
     batch_size = 20
@@ -53,12 +53,11 @@ if __name__ == "__main__":
 
     reconstr_err_200 = []
 
-    for i in range(0,epochs):
-        rbm.cd1(visible_trainset=train_imgs, n_iterations=n_iterations)
-        reconstr_err_200 += rbm.get_err_rec()
+    rbm.cd1(visible_trainset=train_imgs, n_iterations=n_iterations)
+    reconstr_err_200 += rbm.get_err_rec()
 
 
-    x_axis = np.arange(len(reconstr_err_500))/n_iterations
+    x_axis = np.arange(len(reconstr_err_500))*batch_size/60000
     plt.title("Reconstruction error along epochs") 
     plt.xlabel("Epoch") 
     plt.ylabel("Reconstruction error") 
