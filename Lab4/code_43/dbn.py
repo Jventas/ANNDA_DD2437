@@ -108,8 +108,7 @@ class DeepBeliefNet():
         ax.set_xticks([]); ax.set_yticks([])
 
         lbl = true_lbl # labels layer gets the label data
-        # h2 = sample_binary(0.5*np.ones((n_sample, self.sizes['pen']))) # random data at the beginning in layer 2 (pen)
-        h2 = np.ones((n_sample, self.sizes['pen']))
+        h2 = sample_binary(0.5*np.ones((n_sample, self.sizes['pen']))) # random data at the beginning in layer 2 (pen)
         h2_and_labels = np.concatenate((h2,lbl),axis=1)
             
         for _ in range(self.n_gibbs_gener):
@@ -121,6 +120,7 @@ class DeepBeliefNet():
             h3 = self.rbm_stack["pen+lbl--top"].get_h_given_v(h2_and_labels)[1]
             h2_and_labels = self.rbm_stack["pen+lbl--top"].get_v_given_h(h3)[1]
             h2 = h2_and_labels[:, :-n_labels]
+            h2_and_labels = np.concatenate((h2,lbl),axis=1)
 
             
             records.append( [ ax.imshow(vis.reshape(self.image_size), cmap="bwr", vmin=0, vmax=1, animated=True, interpolation=None) ] )
@@ -263,11 +263,11 @@ class DeepBeliefNet():
                 predictions : compute generative predictions from wake-phase activations, 
                               and recognize predictions from sleep-phase activations
                 """
-                vis_pred_gen = self.rbm_stack["vis--hid"].get_v_given_h_dir(h1)[1]
-                h1_pred_gen = self.rbm_stack["hid--pen"].get_v_given_h_dir(h2)[1]
+                vis_pred_gen = self.rbm_stack["vis--hid"].get_v_given_h_dir(h1)[0]
+                h1_pred_gen = self.rbm_stack["hid--pen"].get_v_given_h_dir(h2)[0]
 
-                h2_pred_rec = self.rbm_stack["hid--pen"].get_h_given_v_dir(h1_down)[1]
-                h1_pred_rec = self.rbm_stack["vis--hid"].get_h_given_v_dir(vis_down)[1]
+                h2_pred_rec = self.rbm_stack["hid--pen"].get_h_given_v_dir(h1_down)[0]
+                h1_pred_rec = self.rbm_stack["vis--hid"].get_h_given_v_dir(vis_down)[0]
                 
                 """ 
                 update generative parameters :
