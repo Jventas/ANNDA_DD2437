@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     print ("\nStarting a Deep Belief Net..")
 
-    batch_size = 10
+    batch_size = 20
     
     dbn = DeepBeliefNet(sizes={"vis":image_size[0]*image_size[1], "hid":500, "pen":500, "top":2000, "lbl":10},
                         image_size=image_size,
@@ -20,13 +20,13 @@ if __name__ == "__main__":
     )
     
     ''' greedy layer-wise training '''
-    epochs = 20
+    epochs = 10
 
     iterations = int(60000*epochs/batch_size)
 
     dbn.train_greedylayerwise(vis_trainset=train_imgs, lbl_trainset=train_lbls, n_iterations=iterations)
 
-    dbn.recognize(train_imgs, train_lbls)
+    #dbn.recognize(train_imgs, train_lbls)
     
     dbn.recognize(test_imgs, test_lbls)
 
